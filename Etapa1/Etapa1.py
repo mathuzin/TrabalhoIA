@@ -26,14 +26,14 @@ class GridWorld:
     def print_grid(self, robot_position):
         """
         Imprime o estado atual do grid com o robô.
-        'R' representa a posição do robô, '.' é uma célula vazia.
+        'X' representa a posição do robô, '.' é uma célula vazia.
         """
         print("-" * (self.n * 2 + 1))
         for y in range(self.n - 1, -1, -1):
             row = "|"
             for x in range(self.n):
                 if (x, y) == robot_position:
-                    row += " R"
+                    row += " X"
                 else:
                     row += " ."
             row += " |"
@@ -69,7 +69,12 @@ class SequentialReactiveAgent:
         elif current_direction == 'oeste': next_position[0] -= 1
         
         if self.grid.is_wall(tuple(next_position))[current_direction]:
-            print(f"Colisão detectada na parede {current_direction}. Movendo para a próxima direção.")
+            if current_direction == 'norte': self.position = (self.position[0], self.grid.bounds['norte'])
+            elif current_direction == 'sul': self.position = (self.position[0], self.grid.bounds['sul'])
+            elif current_direction == 'leste': self.position = (self.grid.bounds['leste'], self.position[1])
+            elif current_direction == 'oeste': self.position = (self.grid.bounds['oeste'], self.position[1])
+
+            print(f"Colisão detectada na parede {current_direction}. Robô encostou em {self.position}.")
             self.walls_collided.add(current_direction)
             self.current_step += 1
         else:
