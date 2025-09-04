@@ -104,6 +104,6 @@ if __name__ == "__main__":
         print(f"Passo {step}. Direção atual: {robot.move_sequence[robot.current_step] if robot.current_step < len(robot.move_sequence) else 'N/A'}")
         print(f"Paredes colididas até agora: {robot.walls_collided}\n")
         world.print_grid(robot.position)
-        time.sleep(0.5)
+        time.sleep(0.3)
 
     print(f"\nSimulação concluída em {step} passos.")
